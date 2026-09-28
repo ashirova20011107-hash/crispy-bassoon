@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Для Андрея 💌</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    color: #0567ef;
+    font-family: Georgia, serif;
+    overflow: hidden;
+}
+
+/* ---------------- ФОН ---------------- */
+
+canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* ---------------- ЭКРАНЫ ---------------- */
+
+.screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 1.2s ease;
+
+    z-index: 2;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ---------------- ЦИФРЫ ---------------- */
+
+.number {
+    font-size: 120px;
+    color: #0c92ff;
+
+    text-shadow:
+        0 0 10px #0d19fb,
+        0 0 30px #35b8ff;
+
+    animation: numberAnimation 1.5s ease;
+}
+
+@keyframes numberAnimation {
+
+    0% {
+        transform: scale(2);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+}
+
+/* ---------------- ТЕКСТ ---------------- */
+
+.main-text {
+    text-align: center;
+
+    font-size: 70px;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    color: #1c48a1;
+
+    text-shadow:
+        0 0 10px #032e7e,
+        0 0 30px #0f41ab;
+
+    animation: textAppear 2s ease;
+}
+
+@keyframes textAppear {
+
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ---------------- ФОТО ---------------- */
+
+.photo {
+    width: 210px;
+    height: 260px;
+
+    object-fit: cover;
+
+    border: 5px solid #1046c2;
+
+    box-shadow:
+        0 0 15px #107ee4,
+        0 0 50px rgba(8, 113, 225, 0.44);
+
+    animation: photoAppear 2s ease;
+}
+
+@keyframes photoAppear {
+
+    from {
+        transform: translateY(80px) scale(.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* ---------------- СЕРДЦЕ ---------------- */
+
+.heart {
+    margin-top: 30px;
+
+    font-size: 100px;
+
+    color: #fb3142;
+
+    filter:
+        drop-shadow(0 0 10px #f70303)
+        drop-shadow(0 0 25px #fa1206);
+
+    animation: heartBeat 1.3s infinite;
+}
+
+@keyframes heartBeat {
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+    }
+}
+
+/* ---------------- КОНВЕРТ ---------------- */
+
+.envelope {
+    width: 250px;
+    height: 170px;
+
+    background: #1d82fe;
+
+    position: relative;
+
+    box-shadow:
+        0 0 20px rgba(5, 84, 231, 0.3),
+        0 0 50px rgba(4, 58, 235, 0.25);
+
+    cursor: pointer;
+
+    animation: envelopeAppear 2s ease;
+}
+
+.envelope::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 0;
+    height: 0;
+
+    border-left: 125px solid transparent;
+    border-right: 125px solid transparent;
+    border-top: 90px solid #013082;
+}
+
+.envelope::after {
+
+    content: "💌";
+
+    position: absolute;
+
+    top: 58px;
+    left: 105px;
+
+    font-size: 40px;
+}
+
+@keyframes envelopeAppear {
+
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.click-text {
+    margin-top: 25px;
+
+    color: #083c77c6;
+
+    font-size: 18px;
+
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+
+    50% {
+        opacity: .3;
+    }
+}
+
+/* ---------------- ПИСЬМО ---------------- */
+
+.letter {
+    width: min(520px, 90%);
+
+    padding: 35px;
+
+    background: #98c4ee;
+
+    color: #0c0c0c;
+
+    box-shadow:
+        0 0 30px rgba(24, 23, 23, 0.2);
+
+    transform: scale(.7);
+
+    transition: 1s;
+}
+
+.letter.show {
+    transform: scale(1);
+}
+
+.letter h2 {
+
+    text-align: center;
+
+    font-size: 30px;
+
+    margin-bottom: 20px;
+
+    color: #111111;
+}
+
+.letter p {
+
+    font-size: 18px;
+
+    line-height: 1.7;
+
+    text-align: center;
+}
+
+.signature {
+
+    margin-top: 25px;
+
+    text-align: right;
+
+    font-style: italic;
+
+    color: #090909;
+}
+
+/* ---------------- КНОПКА ---------------- */
+
+button {
+
+    margin-top: 25px;
+
+    padding: 12px 25px;
+
+    background: transparent;
+
+    border: 1px solid #7babe9;
+
+    color: #567bf5;
+
+    cursor: pointer;
+
+    font-family: Georgia, serif;
+
+    transition: .3s;
+}
+
+button:hover {
+
+    background: #27a9ef;
+
+    color: #000;
+
+    box-shadow: 0 0 20px #2a9bf8;
+}
+
+/* ---------------- ТЕЛЕФОН ---------------- */
+
+@media(max-width:600px) {
+
+    .main-text {
+        font-size: 42px;
+    }
+
+    .number {
+        font-size: 90px;
+    }
+
+    .photo {
+        width: 170px;
+        height: 220px;
+    }
+
+    .letter {
+        padding: 25px;
+    }
+
+    .letter p {
+        font-size: 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="canvas"></canvas>
+
+
+<!-- 3 -->
+
+<div class="screen active" id="screen1">
+    <div class="number">3</div>
+</div>
+
+
+<!-- 2 -->
+
+<div class="screen" id="screen2">
+    <div class="number">2</div>
+</div>
+
+
+<!-- 1 -->
+
+<div class="screen" id="screen3">
+    <div class="number">1</div>
+</div>
+
+
+<!-- ТЕКСТ -->
+
+<div class="screen" id="screen4">
+
+    <div class="main-text">
+        Андрей
+        <br>
+        это тебе ^3^💕
+    </div>
+
+</div>
+
+
+<!-- ФОТО -->
+
+<div class="screen" id="screen5">
+
+    <img
+        class="photo"
+        src="./afd59076d2f49760050ab0c223869f54.gif"
+        alt="Андрей"
+    >
+
+</div>
+
+
+<!-- СЕРДЦЕ -->
+
+<div class="screen" id="screen6">
+
+    <div class="heart">
+        ♥
+    </div>
+
+</div>
+
+
+<!-- КОНВЕРТ -->
+
+<div class="screen" id="screen7">
+
+    <div
+        class="envelope"
+        onclick="openLetter()"
+    ></div>
+
+    <div class="click-text">
+        нажми на конверт 💌
+    </div>
+
+</div>
+
+
+<!-- ПИСЬМО -->
+
+<div class="screen" id="screen8">
+
+    <div class="letter" id="letter">
+
+        <h2>
+            С днём рождения, Андрей! 🎂
+        </h2>
+
+        <p>
+            Поздравляю тебя с 13-летием! 💗
+            <br><br>
+
+            Желаю тебе много счастливых
+            моментов, крутых приключений,
+            настоящих друзей и чтобы
+            всё, о чём ты мечтаешь,
+            обязательно сбылось.
+            <br><br>
+
+            Пусть этот год подарит тебе
+            много воспоминаний,
+            которые ты ещё долго
+            будешь вспоминать с улыбкой.
+            ✨
+        </p>
+
+        <div class="signature">
+            С днём рождения! 💌
+        </div>
+
+        <div style="text-align:center;">
+            <button onclick="location.reload()">
+                ↻ Посмотреть ещё раз
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==================================================
+   ПАДАЮЩИЕ СИМВОЛЫ
+================================================== */
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let symbols = [];
+
+const chars = [
+    "♥",
+    "✦",
+    "✧",
+    "·",
+    "♡",
+    "✿"
+];
+
+for(let i = 0; i < 170; i++) {
+
+    symbols.push({
+
+        x: Math.random() * canvas.width,
+
+        y: Math.random() * canvas.height,
+
+        size: Math.random() * 12 + 5,
+
+        speed: Math.random() * 2 + 0.5,
+
+        char:
+            chars[
+                Math.floor(
+                    Math.random() * chars.length
+                )
+            ],
+
+        opacity:
+            Math.random() * 0.7 + 0.2
+    });
+}
+
+
+function drawSymbols() {
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    symbols.forEach(s => {
+
+        ctx.fillStyle =
+    `rgba(30,144,255,${s.opacity})`;
+
+        ctx.font =
+            `${s.size}px Georgia`;
+
+        ctx.fillText(
+            s.char,
+            s.x,
+            s.y
+        );
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height) {
+
+            s.y = -20;
+
+            s.x =
+                Math.random() *
+                canvas.width;
+        }
+
+    });
+
+    requestAnimationFrame(drawSymbols);
+}
+
+drawSymbols();
+
+
+/* ==================================================
+   ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ
+================================================== */
+
+const screens = [
+    document.getElementById("screen1"),
+    document.getElementById("screen2"),
+    document.getElementById("screen3"),
+    document.getElementById("screen4"),
+    document.getElementById("screen5"),
+    document.getElementById("screen6"),
+    document.getElementById("screen7"),
+    document.getElementById("screen8")
+];
+
+let current = 0;
+
+function nextScreen() {
+
+    if(current >= screens.length - 1)
+        return;
+
+    screens[current].classList.remove("active");
+
+    current++;
+
+    screens[current].classList.add("active");
+}
+
+
+/* 3 → 2 → 1 */
+
+setTimeout(nextScreen, 1800);
+
+setTimeout(nextScreen, 3600);
+
+setTimeout(nextScreen, 5400);
+
+
+/* текст */
+
+setTimeout(nextScreen, 8000);
+
+
+/* фото */
+
+setTimeout(nextScreen, 11500);
+
+
+/* сердце */
+
+setTimeout(nextScreen, 15000);
+
+
+/* конверт */
+
+setTimeout(nextScreen, 18500);
+
+
+/* ==================================================
+   ОТКРЫТИЕ ПИСЬМА
+================================================== */
+
+function openLetter() {
+
+    document
+        .getElementById("screen7")
+        .classList.remove("active");
+
+    document
+        .getElementById("screen8")
+        .classList.add("active");
+
+    setTimeout(() => {
+
+        document
+            .getElementById("letter")
+            .classList.add("show");
+
+    }, 100);
+
+}
+
+
+/* ==================================================
+   РАЗМЕР CANVAS
+================================================== */
+
+window.addEventListener("resize", () => {
+
+    canvas.width =
+        window.innerWidth;
+
+    canvas.height =
+        window.innerHeight;
+
+});
+
+</script>
+
+</body>
+</html>
